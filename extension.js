@@ -1,20 +1,17 @@
-const Main = imports.ui.main;
+const WorkspaceSwitcherPopup = imports.ui.workspaceSwitcherPopup.WorkspaceSwitcherPopup;
 
-let oldWorkspaceSwitcherPopup;
+let oldWorkspaceSwitcherPopup_show;
 
 function init() {
-    oldWorkspaceSwitcherPopup = Main.wm._workspaceSwitcherPopup;
+    oldWorkspaceSwitcherPopup_show = WorkspaceSwitcherPopup.prototype['_show'];
 }
 
 function enable() {
-    // monkey patch
-    Main.wm._workspaceSwitcherPopup = function(actor) {
-        return false;
-    }
+    WorkspaceSwitcherPopup.prototype['_show'] = function() {}
 }
 
 function disable() {
-    Main.wm._workspaceSwitcherPopup = oldWorkspaceSwitcherPopup;
+    WorkspaceSwitcherPopup.prototype['_show'] = oldWorkspaceSwitcherPopup_show;
 }
 
 // Backwards compatability with 3.0.2
